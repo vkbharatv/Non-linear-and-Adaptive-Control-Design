@@ -1,0 +1,22 @@
+# Cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.cache/
+*.cache
+
+# MATLAB cache files
+*.asv
+*.m~
+
+# Simulink cache files
+*.slx.autosave
+slprj/
+*.slx.bak
