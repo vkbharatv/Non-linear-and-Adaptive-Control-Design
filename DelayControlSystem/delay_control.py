@@ -1,4 +1,15 @@
 # %%
+"""
+Delay Control System Simulation
+This module defines a DelayControlSystem class that simulates a control system with input delay. It includes methods for stepping through the simulation, resetting the system, checking marginal stability, and calculating gain and phase margins.
+Developed for educational and research purposes.
+Author: Dr. Bharat Verma
+Date: 2026-10-01
+Institution: The LNMIIT, Jaipur, India
+ORCID: https://orcid.org/0000-0001-7600-7872
+"""
+
+# %%
 import control as ctrl
 import numpy as np
 import matplotlib.pyplot as plt
