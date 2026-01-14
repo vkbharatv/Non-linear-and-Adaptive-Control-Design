@@ -13,7 +13,6 @@ ORCID: https://orcid.org/0000-0001-7600-7872
 import control as ctrl
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import lti, step, square
 import scipy.signal as sp
 
 # %%
