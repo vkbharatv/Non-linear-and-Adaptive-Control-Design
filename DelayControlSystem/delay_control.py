@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal as sp
 
+
 # %%
 class DelayControlSystem:
 
@@ -27,20 +28,24 @@ class DelayControlSystem:
         self.sim_time = Total_time
         self.dt = dt
         # Use dynamic storage so arrays grow as needed.
-        self.t = [0.0]
-        self.u = [0.0]  # Time series of actual inputs (with delay applied)
+        self.t = [0]
+        self.u = [0]  # Time series of actual inputs (with delay applied)
         self.y = [np.zeros(self.p)]
         self.x = [np.zeros(self.n)]
         self.i = 0
         # Delay buffer for storing past inputs
-        self.delay_steps = int(np.ceil(self.delay_time / self.dt)) if delay_time > 0 else 0
-        self.u_delay_buffer = np.zeros(self.delay_steps) if self.delay_steps > 0 else np.array([])
+        self.delay_steps = (
+            int(np.ceil(self.delay_time / self.dt)) if delay_time > 0 else 0
+        )
+        self.u_delay_buffer = (
+            np.zeros(self.delay_steps) if self.delay_steps > 0 else np.array([])
+        )
         self.buffer_index = 0
 
     def reset(self):
         self.delay_time = 0
-        self.t = [0.0]
-        self.u = [0.0]
+        self.t = [0]
+        self.u = [0]
         self.y = [np.zeros(self.p)]
         self.x = [np.zeros(self.n)]
         self.i = 0
@@ -48,27 +53,32 @@ class DelayControlSystem:
         if self.delay_steps > 0:
             self.u_delay_buffer = np.zeros(self.delay_steps)
 
-    def step(self,u=1.0):
-        self.i = self.i + 1
-        dt = self.dt 
-        next_t = self.t[-1] + dt
-
+    def step(self, u=1.0):
         # Get current input from input signal
-        u_current_input = np.asarray(u).item() if np.asarray(u).size == 1 else np.asarray(u).flatten()[0]
+        u_current_input = (
+            np.asarray(u).item()
+            if np.asarray(u).size == 1
+            else np.asarray(u).flatten()[0]
+        )
 
         # Apply delay using buffer
         if self.delay_steps > 0:
-            self.u_delay_buffer[self.buffer_index] = u_current_input
-            u_current = self.u_delay_buffer[(self.buffer_index + 1) % self.delay_steps]
-            self.buffer_index = (self.buffer_index + 1) % self.delay_steps
+            self.u_delay_buffer = np.roll(self.u_delay_buffer, 1)
+            self.u_delay_buffer[0] = u_current_input
+            u_current = self.u_delay_buffer[-1]
         else:
             u_current = u_current_input
 
         x_prev = self.x[-1]
-        x_next = x_prev + dt * (self.A @ x_prev + np.asarray(self.B).flatten() * u_current)
+        x_next = x_prev + self.dt * (
+            self.A @ x_prev + np.asarray(self.B).flatten() * u_current
+        )
 
         # Output: y = C*x + D*u
         y_next = self.C @ x_next + np.asarray(self.D).flatten()[0] * u_current
+
+        next_t = (self.t[-1] + self.dt) if self.t else self.dt
+        self.i = self.i + 1
 
         self.t.append(next_t)
         self.x.append(x_next)
@@ -127,9 +137,9 @@ if __name__ == "__main__":
     C = 1 + 0.5 / s
 
     # Define delay time
-    delay_time = 1 # seconds
+    delay_time = 1  # seconds
     dt = 0.01  # time step
-    f = 1/200
+    f = 1 / 200
     sim_time = 100
     r = sp.square(2 * np.pi * f * np.arange(0, sim_time, dt))
     # Create DelayControlSystem instance
@@ -144,16 +154,16 @@ if __name__ == "__main__":
         Ref = np.append(Ref, r[i])
         e = np.append(e, Ref[-1] - delay_system.y[-1])
         x, y, t = delay_system.step(u_c)
-        _,u_c,_ = controller.step(e[i])
-    ise = np.sum(e**2)*dt
+        _, u_c, _ = controller.step(e[i])
+    ise = np.sum(e**2) * dt
     iae = np.sum(np.abs(e)) * dt
 
     plt.plot(delay_system.t, delay_system.y, "b-", label="Output y(t)")
     plt.plot(delay_system.t, e, "r--", label="Error e(t)")
     plt.plot(delay_system.t, Ref, "g--", label="Reference r(t)")
-    plt.grid(True, which='both')
+    plt.grid(True, which="both")
     plt.minorticks_on()
-    plt.grid(True, which='minor', alpha=0.3)
+    plt.grid(True, which="minor", alpha=0.3)
     plt.legend(loc="best")
     plt.show()
     print("Performance Metrics:")
