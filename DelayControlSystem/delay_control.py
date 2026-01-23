@@ -130,6 +130,60 @@ class DelayControlSystem:
         return gain_margin, phase_margin, gain_crossover_freq, phase_crossover_freq
 
 
+# %% The PID Controller Class
+class PIDController:
+    def __init__(self, Kp=1.0, Ki=0.0, Kd=0.0, dt=0.01, N=100):
+        self.Kp = np.array(Kp)
+        self.Ki = np.array(Ki)
+        self.Kd = np.array(Kd)
+        self.dt = dt
+        self.integral = 0.0
+        self.prev_error = 0.0
+        self.N = N  # Derivative filter coefficient
+        self.derivative_filtered = 0.0
+
+    def __call__(self):
+        print("The PID controller Gains are")
+        print(f"Kp: {self.Kp}, Ki: {self.Ki}, Kd: {self.Kd}")
+
+    def compute(self, setpoint, measurement):
+        error = setpoint - measurement
+        self.integral += error * self.dt
+        derivative = (error - self.prev_error) / self.dt if self.dt > 0 else 0.0
+        self.derivative_filtered = (
+            (self.N * self.dt * derivative + self.derivative_filtered)
+            / (self.N * self.dt + 1)
+            if hasattr(self, "derivative_filtered")
+            else derivative
+        )
+        output = (
+            (self.Kp * error)
+            + (self.Ki * self.integral)
+            + (self.Kd * self.derivative_filtered)
+        )
+        self.prev_error = error
+        return output
+
+    def reset(self):
+        self.integral = 0.0
+        self.prev_error = 0.0
+        self.derivative_filtered = 0.0
+
+    def update_gains(self, Kp, Ki, Kd):
+        self.Kp = np.array(Kp)
+        self.Ki = np.array(Ki)
+        self.Kd = np.array(Kd)
+
+    # %% IMC-PID Tuning Method for FOPDT Systems with Talyor Series Approximation
+    def IMC_tune(self, lambda_c, K, tau, theta):
+        K_c = tau / (K * (lambda_c + theta))
+        tau_i = tau
+        Kp = K_c
+        Ki = K_c / tau_i
+        Kd = 0.0
+        self.update_gains(Kp, Ki, Kd)
+
+
 # %%
 if __name__ == "__main__":
     s = ctrl.TransferFunction.s
