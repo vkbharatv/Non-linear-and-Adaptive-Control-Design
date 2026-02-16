@@ -30,6 +30,25 @@ void motorSys::control_loop(){
   u = pid(error);
   move_motor(u);
 }
+void read_rmp()
+{
+  // RPM reading implementation
+}
+void motorSys::pid(double error)
+{
+  I += error * dt;
+  D = (error - error_prev) / dt;
+  P = error;
+  u = Kp * P + Ki * I + Kd * D;
+  u = constrain(u, u_min, u_max);
+  error_prev = error;
+}
+void motorSys::set_pid_gains(double kp, double ki, double kd)
+{
+  Kp = kp;
+  Ki = ki;
+  Kd = kd;
+}
 
 double motorSys::get_rpm(){
   // RPM calculation implementation
