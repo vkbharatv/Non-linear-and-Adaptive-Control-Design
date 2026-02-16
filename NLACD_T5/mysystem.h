@@ -9,6 +9,7 @@ class motorSys {
         void initializeport(int m1, int m2, int ena, int enb);
         void publish_data();
         void control_loop();
+        void setup_timer_interrupt(unsigned long dt_us, unsigned int prescaler);
         double get_rpm();
         static motorSys* _instance;
 

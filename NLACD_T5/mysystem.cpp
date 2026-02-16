@@ -25,7 +25,10 @@ void motorSys::publish_data(){
 }
 
 void motorSys::control_loop(){
-  // Control loop implementation
+  read_rmp();
+  error = setpoint - _rpm;
+  u = pid(error);
+  move_motor(u);
 }
 
 double motorSys::get_rpm(){
@@ -39,7 +42,52 @@ void motorSys::enc_ISR_wrapper(){
   }
 }
 
-void motorSys::enc_ISR(){
-  // Encoder interrupt service routine
+void motorSys::enc_ISR()
+{
   _encoder_count++;
+}
+
+void motorSys::setup_timer_interrupt(unsigned long dt_us, unsigned int prescaler)
+{
+  _instance = this;
+  noInterrupts();
+
+  TCCR1A = 0;
+  TCCR1B = 0;
+  TCNT1 = 0;
+
+  const unsigned long tick_hz = 16000000UL / prescaler;
+  const float dt_seconds = dt_us / 1000000.0f;
+  unsigned long ocr_value = (unsigned long)(tick_hz * dt_seconds) - 1;
+
+  if (ocr_value > 65535)
+    ocr_value = 65535;
+  OCR1A = (uint16_t)ocr_value;
+
+  TCCR1B |= (1 << WGM12);
+
+  switch (prescaler)
+  {
+  case 1:
+    TCCR1B |= (1 << CS10);
+    break;
+  case 8:
+    TCCR1B |= (1 << CS11);
+    break;
+  case 64:
+    TCCR1B |= (1 << CS11) | (1 << CS10);
+    break;
+  case 256:
+    TCCR1B |= (1 << CS12);
+    break;
+  case 1024:
+    TCCR1B |= (1 << CS12) | (1 << CS10);
+    break;
+  default:
+    TCCR1B |= (1 << CS12);
+    break;
+  }
+
+  TIMSK1 |= (1 << OCIE1A);
+  interrupts();
 }
