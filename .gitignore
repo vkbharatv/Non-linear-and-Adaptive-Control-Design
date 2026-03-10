@@ -11,7 +11,10 @@ dist/
 build/
 .cache/
 *.cache
-
+*.slprj/
+*.slx.bak
+*.slxc
+*.vscode/
 # MATLAB cache files
 *.asv
 *.m~
