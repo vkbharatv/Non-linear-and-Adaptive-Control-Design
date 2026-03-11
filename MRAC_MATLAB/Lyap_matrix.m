@@ -1,17 +1,34 @@
 %% System Definition
 clc,clear
 
-A = -1
-B = 0.5
-C = 1
-D=0
+A = -0.5;
+B = 0.5;
+C = 1;
+D=0;
 
 sys =  ss(A,B,C,D);
 
 %% Reference Plant
-A_m = -1
-B_m = 1
-C_m = 1
-D_m=0
-sys_ref = ss(A_m, B_m, C_m, D_m)
+A_m = -1;
+B_m = 1;
+C_m = 1;
+D_m=0;
+sys_ref = ss(A_m, B_m, C_m, D_m);
 
+%% Closed Loop system
+Kx = (A_m-A)/B
+Kr = B_m/B
+A_cl = A+B*Kx;
+
+%% Simulation
+model_path = "simulation_MRAC.slx";
+Gamma = 10
+open(model_path)
+Sim_out=sim(model_path)
+%%
+figure, hold on
+plot(Sim_out.Kx_hat)
+yline(Kx,'LineStyle',':')
+yline(Kr,'LineStyle',':')
+plot(Sim_out.Kr_hat)
+ylim([Kx-0.1,Kr+0.1])
