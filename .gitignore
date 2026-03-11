@@ -15,6 +15,7 @@ build/
 *.slx.bak
 *.slxc
 *.vscode/
+*.myvenv/
 # MATLAB cache files
 *.asv
 *.m~
