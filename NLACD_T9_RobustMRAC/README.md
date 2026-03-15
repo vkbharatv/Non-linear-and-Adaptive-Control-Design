@@ -87,6 +87,14 @@ $$
 
 where $r$ is the reference input.
 
+<style>
+img[alt="image.png"] {
+    height: 3.5in;
+    width: auto;
+}
+</style>
+![image.png](image.png)
+
 # Results
 - The plots show that with adaptation (gamma > 0), the system states converge to the reference model states, while without adaptation (gamma = 0), there is a significant tracking error due to the uncertainties.
 - The control input plot illustrates how the adaptive controller adjusts the input to compensate for the uncertainties.
