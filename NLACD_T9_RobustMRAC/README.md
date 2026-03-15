@@ -3,9 +3,11 @@
 This project implements a Robust Model Reference Adaptive Control (MRAC) system in Python for a second-order plant with uncertainties. The simulation demonstrates both nominal and adaptive control responses.
 
 ## Main File
+
 - robustMrac.py: Contains the full simulation code, including plant/model definitions, uncertainty introduction, adaptive law, and plotting routines.
 
 ## Key Features
+
 - Uses `controlsim` and `control` libraries for system modeling and simulation.
 - Defines a plant and a reference model using state-space representations.
 - Introduces uncertainties via a nonlinear function of state and time.
@@ -17,34 +19,40 @@ This project implements a Robust Model Reference Adaptive Control (MRAC) system 
   - Estimated parameters vs true values
 
 ## How to Run
+
 1. Ensure required packages are installed:
-   - controlsim
-   - control
-   - numpy
-   - matplotlib
+    - controlsim
+    - control
+    - numpy
+    - matplotlib
+
 2. Run the script:
-   ```bash
-   python robustMrac.py
-   ```
+
+    ```bash
+    python robustMrac.py
+    ```
+
 3. Output plots will be displayed and saved as `robust_mrac_response.png`.
 
 ## Main Functions
+
 - `run_sumulation(gamma, sim_time)`: Runs the simulation for a given adaptation gain (`gamma`).
 - `get_alpha(x, t)`: Computes the uncertainty basis functions.
 
 ## Parameters
+
 - `gamma`: Adaptation gain (set to 0 for nominal, >0 for adaptive)
 - `W`: True uncertainty parameters
 
 ## Output
+
 - Plots of system states, control input, and parameter estimates
 - Lyapunov matrix printed for stability analysis
-
-
 
 ## Mathematical Settings
 
 ### Uncertainty Basis Functions ($\alpha$)
+
 The uncertainty in the plant is modeled using basis functions:
 
 $$
@@ -58,6 +66,7 @@ $$
 where $x_1$ and $x_2$ are the plant states, and $t$ is time.
 
 ### Uncertainty Parameters ($W$)
+
 The true uncertainty vector is:
 
 $$
@@ -65,6 +74,7 @@ W = \begin{bmatrix} 3 & 0.3 & -0.5 \end{bmatrix}
 $$
 
 ### Adaptive Law
+
 The parameter estimation law is:
 
 $$
@@ -72,6 +82,7 @@ $$
 $$
 
 where:
+
 - $\hat{W}$: Estimated parameters
 - $\gamma$: Adaptation gain
 - $e = x - x_m$: Tracking error (plant state minus reference model state)
@@ -89,7 +100,8 @@ where $r$ is the reference input.
 
 ![image.png](image.png)
 
-# Results
+## Results
+
 - The plots show that with adaptation (gamma > 0), the system states converge to the reference model states, while without adaptation (gamma = 0), there is a significant tracking error due to the uncertainties.
 - The control input plot illustrates how the adaptive controller adjusts the input to compensate for the uncertainties.
 - The parameter estimation plot shows how the estimated parameters converge towards the true values over time when adaptation is enabled.
@@ -97,6 +109,7 @@ where $r$ is the reference input.
 ![Plot of system response with and without adaptation](robust_mrac_response.png)
 
 ## Exercises
+
 1. Modify the uncertainty parameters $W$ and observe the system response.
 2. Change the adaptation gain $\gamma$ and analyze its effect on convergence.
 3. Implement a different reference model and compare responses.
@@ -108,6 +121,7 @@ where $r$ is the reference input.
 - For theoretical background, see standard MRAC literature and course notes.
 
 ---
+
 **Author:** Dr. Bharat Verma  
 **Note:** Assistant Professor, The LNMIIT, Jaipur, India  
 **ORCID:** [https://orcid.org/0000-0001-7600-7872](https://orcid.org/0000-0001-7600-7872)  
