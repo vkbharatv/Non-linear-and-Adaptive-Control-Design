@@ -1,3 +1,10 @@
 build
 mx.scratch
 !.settings
+*safeBackup*
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+.gitignore

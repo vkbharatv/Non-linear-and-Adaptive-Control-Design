@@ -24,3 +24,14 @@ build/
 *.slx.autosave
 slprj/
 *.slx.bak
+
+build
+mx.scratch
+!.settings
+*safeBackup*
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+.gitignore
