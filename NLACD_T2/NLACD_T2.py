@@ -2,7 +2,7 @@
 import control as ctrl
 import numpy as np
 import matplotlib.pyplot as plt
-from DelayControlSystem.delay_control import *
+from controlsim import *
 plt.rcParams["mathtext.fontset"] = "cm"
 plt.rcParams["font.family"] = "serif"
 plt.rcParams["font.family"] = "Times New Roman"
@@ -28,7 +28,7 @@ t1, y1 = ctrl.step_response(G1, t)
 t2, y2 = ctrl.step_response(G2, t)
 
 # %%
-G3 = DelayControlSystem(G, delay_time=theta, dt=dt)
+G3 = ProcessDefinition(G, delay_time=theta, dt=dt)
 G3.reset()
 y_t = []
 t_n = []
@@ -66,10 +66,10 @@ plt.legend()
 plt.show()
 # %%
 
-G_delay = DelayControlSystem(G, delay_time=theta, dt=dt)
+G_delay = ProcessDefinition(G, delay_time=theta, dt=dt)
 s = ctrl.TransferFunction.s  # Ensure s is defined as a transfer function variable
 C = 0.2 + 0.2 / s
-C = DelayControlSystem(C, delay_time=0, dt=dt)
+C = ProcessDefinition(C, delay_time=0, dt=dt)
 G_delay.reset()
 C.reset()
 y_T = [0]
