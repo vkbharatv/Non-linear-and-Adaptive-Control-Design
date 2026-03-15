@@ -88,3 +88,9 @@ Adjust these in `Core/Src/main.c` if you change the motor, supply voltage, or lo
 ## REFERENCE
 
 - STMicroelectronics CubeF7 HAL, CMSIS2 and FreeRTOS libraries
+
+---
+**Author:** Dr. Bharat Verma  
+**Note:** Assistant Professor, The LNMIIT, Jaipur, India  
+**ORCID:** [https://orcid.org/0000-0001-7600-7872](https://orcid.org/0000-0001-7600-7872)  
+**GitHub:** [https://github.com/vkbharatv](https://github.com/vkbharatv)

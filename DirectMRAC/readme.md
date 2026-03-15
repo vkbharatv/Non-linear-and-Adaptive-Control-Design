@@ -78,3 +78,9 @@ Example output plot:
 ---
 
 For more details, see the notebook [MRAC_sim.ipynb](MRAC_sim.ipynb).
+
+---
+**Author:** Dr. Bharat Verma  
+**Note:** Assistant Professor, The LNMIIT, Jaipur, India  
+**ORCID:** [https://orcid.org/0000-0001-7600-7872](https://orcid.org/0000-0001-7600-7872)  
+**GitHub:** [https://github.com/vkbharatv](https://github.com/vkbharatv)

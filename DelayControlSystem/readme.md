@@ -143,6 +143,8 @@ The main script generates plots showing:
 
 This project is provided as-is for educational and research purposes.
 
-## Author
-
-NLACD_T Course Project
+---
+**Author:** Dr. Bharat Verma  
+**Note:** Assistant Professor, The LNMIIT, Jaipur, India  
+**ORCID:** [https://orcid.org/0000-0001-7600-7872](https://orcid.org/0000-0001-7600-7872)  
+**GitHub:** [https://github.com/vkbharatv](https://github.com/vkbharatv)

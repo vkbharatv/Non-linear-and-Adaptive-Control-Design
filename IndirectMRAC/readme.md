@@ -126,3 +126,9 @@ Final Estimated Bhat:  0.95 and True B: 1.00
 - Try changing the adaptation gain $\Gamma$ and observe how it affects the convergence of parameter estimates and tracking error. What happens if $\Gamma$ is too high or too low?
 - Experiment with the step size and noise level to see how they influence the system's performance.
 - Derive and implement a different adaptive law for MIMO systems and compare the results with the SISO case.
+
+---
+**Author:** Dr. Bharat Verma  
+**Note:** Assistant Professor, The LNMIIT, Jaipur, India  
+**ORCID:** [https://orcid.org/0000-0001-7600-7872](https://orcid.org/0000-0001-7600-7872)  
+**GitHub:** [https://github.com/vkbharatv](https://github.com/vkbharatv)
