@@ -87,12 +87,6 @@ $$
 
 where $r$ is the reference input.
 
-<style>
-img[alt="image.png"] {
-    height: 3.5in;
-    width: auto;
-}
-</style>
 ![image.png](image.png)
 
 # Results
