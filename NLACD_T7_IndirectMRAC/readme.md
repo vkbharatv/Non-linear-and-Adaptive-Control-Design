@@ -50,7 +50,7 @@ $$
 The parameter estimates $\hat{A}$ and $\hat{B}$ are updated using:
 
 $$
-\dot{\hat{A}} = + \Gamma e y
+\dot{\hat{A}} = \Gamma e x
 $$
 $$
 \dot{\hat{B}} = \Gamma e u
