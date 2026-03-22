@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 from controlsim import *
 plt.rcParams["mathtext.fontset"] = "cm"
 plt.rcParams["font.family"] = "serif"
-plt.rcParams["font.family"] = "Times New Roman"
-plt.style.use("seaborn-v0_8")
 # %%
 """
 1. Delay simulation and effect of approximation
@@ -36,13 +34,12 @@ for t_i in t:
     x, y, _ = G3.step(u=1.0)
     y_t.append(y[0])
     t_n.append(t_i)
-
+plt.figure()
 plt.plot(t1, y1, label="Taylor Approximation")
 plt.plot(t2, y2, label="Pade Approximation")
 plt.plot(t_n, y_t, label='Actual')
 
 plt.legend()
-plt.show()
 """
 For smaller delay: Taylor Approximation is simpler
 For larger delay: Pade Approximation is always better and also reccommended
@@ -60,10 +57,11 @@ print(len(t1), len(y1))
 print(len(t2), len(y2))
 e1 = y_t - y1
 e2 = y_t - y2
+
+plt.figure()
 plt.plot(t_n, e1, label="Error $\\theta$: Taylor Approximation") 
 plt.plot(t_n, e2, label="Error $\\theta$: Pade Approximation")
 plt.legend()
-plt.show()
 # %%
 
 G_delay = ProcessDefinition(G, delay_time=theta, dt=dt)
@@ -83,6 +81,7 @@ for i, t_i in enumerate(t_sim):
     _, y, _ = G_delay.step(u_c)
     y_T.append(y[0])
 
+plt.figure()
 plt.plot(t_sim, y_T[1:], label="Output y(t) with Delay")
 plt.plot(t_sim, r, "r--", label="Reference r(t)")
 plt.grid(True, which="minor", alpha=0.3)
