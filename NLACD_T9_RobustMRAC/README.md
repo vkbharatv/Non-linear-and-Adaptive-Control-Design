@@ -86,7 +86,7 @@ where:
 - $\hat{W}$: Estimated parameters
 - $\gamma$: Adaptation gain
 - $e = x - x_m$: Tracking error (plant state minus reference model state)
-- $P$: Lyapunov matrix (solution to $A^T P + P A = -Q$)
+- $P$: Lyapunov matrix (solution to $A_m^T P + P A_m = -Q$)
 - $B$: Input matrix
 - $\alpha(x, t)$: Uncertainty basis functions
 
